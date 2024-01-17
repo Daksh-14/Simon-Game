@@ -1,5 +1,6 @@
 let buttonColours=['red','blue','green','yellow'],gamePattern=[],userClickedPattern=[]
 let level=0,start=false,count=0
+let button_start=document.getElementById("Start")
 const playSound=(color)=>{
     let aud=new Audio(`./sounds/${color}.mp3`)
     aud.play()
@@ -11,6 +12,24 @@ const animatePress=(x)=>{
         temp.classList.remove("pressed")
     },150
     )
+}
+const refresh=()=>{
+    level=0;
+    userClickedPattern=[]
+    gamePattern=[]
+    start=true
+}
+const game=()=>{
+    button_start.setAttribute("hidden",true);
+    
+    refresh()
+    nextSequence()
+}
+const game1=()=>{
+    button_start.setAttribute("hidden",true);
+    
+    refresh()
+    nextSequence()
 }
 const nextSequence=()=>{
     let randomNumber=Math.floor(Math.random()*4)
@@ -39,6 +58,9 @@ const game_over=()=>{
     document.getElementById("level-title").textContent=`Game Over! Press any key to restart`
     let aud=new Audio(`./sounds/wrong.mp3`)
     aud.play();
+    button_start.hidden=false
+    button_start.innerHTML=`<p>Restart</p>`
+    
 }
 
 const check=()=>{
@@ -56,17 +78,10 @@ const check=()=>{
         },1000)        
     }
 }
-const refresh=()=>{
-    level=0;
-    userClickedPattern=[]
-    gamePattern=[]
-    start=true
-}
-const game=()=>{
-    document.removeEventListener("keydown",game)
-    refresh()
-    nextSequence()
-}
+
+
+
+button_start.addEventListener("click",game1);
 
 document.addEventListener("keydown",game)
 for(let i=0;i<4;i++){
